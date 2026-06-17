@@ -2,40 +2,52 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 20px;
 }
 
-.login_info form {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+/* welcome heading */
+.welcome_heading {
+    padding: 20px;
+}
+
+.login_info h1{
+    margin: 0;
+}
+
+.login_info p{
+    font-size: 20px;
 }
 
 .login_info input {
     border-radius: 10px;
     border: 1px solid grey;
-    width: 135%;
     padding: 15px;
 }
 
-.login_info input.hover {
-    background-color: red;
-}
-
-.login_btn{
-    color: white;
-    border: none;
-    border-radius: 20px;
-    background-color: rgb(106, 146, 255);
-}
-
-.login_info button, .login_info .password button {
+/* password container */
+.passwordContainer{
     display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 100%;
+}
+
+.passwordContainer button {
     cursor: pointer;
-    width: 150%;
-    padding: 20px;
-    margin: 5%;
-    border-radius: 20px;
+}
+
+.passwordContainer button{
     border: none;
+    color: white;
+    font-size: 30px;
+    border-radius: 20px;
+}
+
+.login_btn {
+    width: 100%;
+    border: none;
+    margin: 25px 0;
+    padding: 15px;
+    color: white;
+    font-size: 20px;
+    border-radius: 25px;
+    background-color: rgb(106, 146, 255);
 }

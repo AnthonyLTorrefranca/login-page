@@ -2,40 +2,62 @@ import { useState } from 'react'
 import './Login.css'
 
 export default function Login() {
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [seePassword, setSeePassword] = useState(false)
-    function handle_submit(e){
+    const [showPswd, setShowPswd] = useState(false)
+    const [formValues, setFormValues] = useState({
+        name: "",
+        email: "",
+        pswd: "",
+    });
+    function handleSubmit(e){
         e.preventDefault()
-        console.log(email, password)
+        console.log(formValues)
     }
 return (
-    <>
-    <div className="login_info">
-        <h1>Welcome Back!</h1>
-        <p>Login to continue your shopping journey.</p>
-        <form onSubmit={handle_submit}>
-            {/* email */}
-                <p>Email:</p>
-                <input onChange={(e) =>
-                    setEmail(e.target.value)}
-                    type="text" placeholder="Email or Username"/>
-            {/* password */}
-                <p>Password:</p>
-                <input onChange={(e) => setPassword(e.target.value)}
-                    type={seePassword ?  "text" :  "password"} 
-                    placeholder="Password"/>
-            <button className="seePswd" 
-                    onClick={() => setSeePassword(true)}
-                    value={seePassword} 
-                    type="button">See Password</button>
-            <button className="login_btn">Login</button>
-                <p>or</p>
-            <button type="button">Continue with Google</button>
-            <button type="button">Continue with Facebook</button>
-                <p>Don't have an account? <a href="#" target='_blank'>Sign up.</a></p>
+    <section className='login_info'>
+        <div className='welcome_heading'>
+            <h1>Welcome Back!</h1>
+            <p>Login to continue your shopping journey.</p>
+            <pre>{JSON.stringify(handleSubmit)}</pre>
+        </div>
+        <form onSubmit={handleSubmit}>
+            <section className='nameContainer'>
+                <p>Enter your name:</p>
+                <input 
+                    placeholder='Enter name' 
+                    type="text"
+                    name="name"
+                    onChange={(e) =>
+                        setFormValues({
+                            ...formValues,
+                            name: e.target.value})
+                    } />
+            </section>
+            <section className='emailContainer'>
+                <p>Enter your email:</p>
+                <input 
+                    placeholder='Enter email or username' 
+                    type="text"
+                    name="email"
+                    onChange={(e) =>
+                        setFormValues({
+                            ...formValues,
+                            email: e.target.value})
+                    } />
+            </section>
+            <p>Enter password:</p>
+            <section className="passwordContainer">
+                <input 
+                    placeholder='Enter password' 
+                    type={showPswd ? "text" : "password"}
+                    name="pswd"
+                    onChange={(e) => setFormValues({
+                        ...formValues,
+                        pswd: e.target.value,})
+                    } />
+                <button type="button" onClick={()=> setShowPswd(!showPswd)}>👁</button>
+            </section>
+            <button className='login_btn'>Log In</button>
         </form>
-    </div>
-    </>
+    </section>
 )
 }
