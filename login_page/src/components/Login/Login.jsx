@@ -1,62 +1,46 @@
-import { useState } from 'react'
+import { useState } from "react";
 import './Login.css'
 
 export default function Login() {
-    const [showPswd, setShowPswd] = useState(false)
-    const [formValues, setFormValues] = useState({
-        name: "",
-        email: "",
-        pswd: "",
-    });
+    const [seePswd, setSeePswd] = useState(false)
+    const [formValue, setFormValue] = useState({
+        username: "",
+        password: "",
+    })
     function handleSubmit(e){
         e.preventDefault()
-        console.log(formValues)
+        console.log(formValue)
     }
 return (
-    <section className='login_info'>
-        <div className='welcome_heading'>
-            <h1>Welcome Back!</h1>
-            <p>Login to continue your shopping journey.</p>
-        </div>
+    <section className="loginInfo">
+        <h1>Welcome Back!</h1>
+            <p>Login to continue your shopping journey</p>
         <form onSubmit={handleSubmit}>
-            <section className='nameContainer'>
-                <p>Enter your name:</p>
-                <input 
-                    placeholder='Enter name' 
-                    type="text"
-                    name="name"
-                    onChange={(e) =>
-                        setFormValues({
-                            ...formValues,
-                            name: e.target.value})
-                    } />
+            <p>Enter username</p>
+            <section className="usernameContainer">
+                <input placeholder="Enter username"
+                    name="username" 
+                    type="text" 
+                    onChange={(e) => setFormValue(({ ...formValue, username: e.target.value }))}/>
             </section>
-            <section className='emailContainer'>
-                <p>Enter your email:</p>
-                <input 
-                    placeholder='Enter email or username' 
-                    type="text"
-                    name="email"
-                    onChange={(e) =>
-                        setFormValues({
-                            ...formValues,
-                            email: e.target.value})
-                    } />
-            </section>
-            <p>Enter password:</p>
+                <p>Enter password</p>
             <section className="passwordContainer">
-                <input 
-                    placeholder='Enter password' 
-                    type={showPswd ? "text" : "password"}
-                    name="pswd"
-                    onChange={(e) => setFormValues({
-                        ...formValues,
-                        pswd: e.target.value,})
-                    } />
-                <button type="button" onClick={()=> setShowPswd(!showPswd)}>👁</button>
+                <input placeholder="Enter password"
+                    name="password" 
+                    type={seePswd ? "text" : "password"} 
+                    onChange={(e) => setFormValue(({ ...formValue, password: e.target.value }))}/>
+            <button 
+                type="button"
+                onClick={()=> setSeePswd(!seePswd)}>👁</button>
             </section>
-            <button className='login_btn'>Log In</button>
+                <button type="submit" className="loginBtn">Login</button>
         </form>
+            <p>or</p>
+        <section>
+            <button className="continueWithSocials">Continue with Google</button>
+            <button className="continueWithSocials">Continue with Facebook</button>
+        </section>
+        <p>Don't have an account? <a href="#">Sign up.</a></p>
     </section>
-)
+    )
 }

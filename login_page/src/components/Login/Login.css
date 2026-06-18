@@ -1,24 +1,33 @@
-.login_info {
+.loginInfo {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 20px;
+    width: 400px;
+    border: 10px solid lightgrey;
+    border-radius: 10px;
 }
 
 /* welcome heading */
-.welcome_heading {
+.welcomeHeading {
+    margin: 0;
     padding: 20px;
 }
 
-.login_info h1{
-    margin: 0;
-}
-
-.login_info p{
+.loginInfo p{
     font-size: 20px;
 }
 
-.login_info input {
+/* username container */
+.usernameContainer input, .passwordContainer input{
+    width: 380px;
+    font-size: 20px;
+}
+
+.loginInfo input {
+    width: 85%;
+    font-size: 20px;
     border-radius: 10px;
     border: 1px solid grey;
     padding: 15px;
@@ -27,27 +36,45 @@
 /* password container */
 .passwordContainer{
     display: flex;
+    flex-direction: row;
     width: 100%;
-}
-
-.passwordContainer button {
-    cursor: pointer;
 }
 
 .passwordContainer button{
     border: none;
     color: white;
     font-size: 30px;
+    cursor: pointer;
     border-radius: 20px;
 }
 
-.login_btn {
+.loginBtn {
     width: 100%;
     border: none;
     margin: 25px 0;
     padding: 15px;
     color: white;
     font-size: 20px;
+    cursor: pointer;
     border-radius: 25px;
     background-color: rgb(106, 146, 255);
+}
+
+
+.social {
+    display: flex;
+    flex-direction: column;
+}
+
+.continueWithSocials {
+    width: 100%;
+    border: none;
+    margin: 5px 0;
+    padding: 15px;
+    color: black;
+    font-size: 20px;
+    width: 380px;
+    cursor: pointer;
+    border-radius: 25px;
+    background-color: rgba(227, 227, 227, 0.712);
 }
