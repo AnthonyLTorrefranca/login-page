@@ -2,36 +2,28 @@ import { useState } from 'react';
 import './Login.css'
 
 export default function Login() {
-    const [formValues, setFormValues] = useState({
-        username: "",
-        password: "",
-    })
-    const [showPswd, setShowPswd] = useState(false)
+    const users = { username: "tony", password: "test", }
+    const [showPswd, setShowPswd] = useState(false);
+    const [formValues, setFormValues] = useState({ username: "", password: "", });
+
     function handleSubmit(e){
         e.preventDefault()
-        console.log(JSON.stringify(formValues))
-        const username = formValues.username
-        const password = formValues.password
-        const users = {
-            username: "tony",
-            password: "test",
-        }
-        if (username !== users.username || password !== users.password) {
-            console.log("User not found")
+        if (formValues.username !== users.username || formValues.password !== users.password ) {
+            alert("No user details found!")
             return
         }  
         else {
-            console.log(`Welcome back ${username}`)
+            alert(`Welcome back, ${formValues.username}`)
         }
         setFormValues({
             username: "",
             password: "",
         })
-        e.preventDefault()
     }
 return (
     <section className='loginInfo'>
-        <h1 className='welcomeHeading'>Welcome back!</h1>
+        <section>
+        </section>
         <p>Login to continue your shopping journey.</p>
         <form onSubmit={handleSubmit}>
             <p>Enter username</p>
