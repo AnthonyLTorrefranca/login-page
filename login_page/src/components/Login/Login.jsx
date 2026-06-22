@@ -15,33 +15,30 @@ export default function Login() {
         { username: "david", password: "test" },
     ]
     function handleChange(e){
-        const { name, value } = e.target
-        setFormValues({
-            ...formValues,
-            [name]: value,
-        })
+        const { name, value } = e.target;
+        setFormValues(prev =>({
+            ...prev,
+            [name]: value
+        }))
     }
-    const userInfo = userDetails.find((user) =>{
-        return user.username === formValues.username && user.password === formValues.password
-    })
-
     function handleSubmit(e){
         e.preventDefault();
-        console.log(formValues)
-        if (!formValues.username === "" || formValues.password === ""){
-            alert("Cannot find user!")
+        const userInput = formValues.username
+        const passInput = formValues.password
+        
+        if (userInput === "" || passInput === ""){
+        alert("Please enter credentials!")
             return
         }
-         else if (!userInfo){
-            alert("Please enter credentials!")
-            return
-        }
-        alert(`Welcome back, ${formValues.username}`)
-            setFormValues({
-            username: "",
-            password: "",
+        const userInfo = userDetails.find((user) =>{
+            return user.username === formValues.username && user.password === formValues.password
         })
-    }
+        if (!userInfo){
+            alert("No account found!")
+            return
+        }
+        alert(`Welcome back, ${userInput}`)
+        }
   return (
     <section className="loginInfo">
       <h1 className="welcomeHeading">Welcome back!</h1>
