@@ -2,10 +2,22 @@ import { useState } from 'react';
 import './Login.css'
 
 export default function Login() {
-    const users = { username: "tony", password: "test", }
     const [showPswd, setShowPswd] = useState(false);
-    const [formValues, setFormValues] = useState({ username: "", password: "", });
+    const [formValues, setFormValues] = useState({ 
+        username: "", 
+        password: "", 
+    });
+    
+    const users = [
+        {username: "tony", password: "test"},
+        {username: "simon", password: "test"},
+        {username: "john", password: "test"},
+        {username: "dave", password: "test"},
+        {username: "david", password: "test"},
+    ]
+    function handleChange(e){
 
+    }
     function handleSubmit(e){
         e.preventDefault()
         if (formValues.username !== users.username || formValues.password !== users.password ) {
@@ -30,11 +42,9 @@ return (
                 <section>
                     <input type="text" required
                     placeholder='Enter username'
+                    name="username"
                     value={formValues.username}
-                    onChange={(e) => setFormValues(prev =>({
-                        ...prev,
-                        username: e.target.value, 
-                    }))} />
+                    onChange={handleChange} />
                 </section>
             <p>Enter password</p>
                 <section className='passwordContainer'>
