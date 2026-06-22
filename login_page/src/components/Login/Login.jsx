@@ -2,66 +2,74 @@ import { useState } from "react"
 import './Login.css'
 
 export default function Login() {
-    const [formValue, setFormValue] = useState({
+    const [ShowPswd, setShowPswd] = useState(false)
+    const [formValues, setFormValues] = useState({
         username: "",
         password: "",
-    }) 
-    const [ShowPswd, setShowPswd] = useState(false)
-    function handleChange(e){
-        const { name, value } = e.target;
-        setFormValue({
-            ...formValue,
-            [name]: value
-        })
-    }
-    const userDetail = [
+    })
+    const userDetails = [
         { username: "tony", password: "test" },
         { username: "simon", password: "test" },
         { username: "john", password: "test" },
         { username: "tian", password: "test" },
-        { username: "dave", password: "test" },
+        { username: "david", password: "test" },
     ]
-    function handleSubmit(e){
-        e.preventDefault()
-        const foundUser = userDetail.find((user) => {
-            return user.username === formValue.username.toLowerCase() && user.password === formValue.password;
+    function handleChange(e){
+        const { name, value } = e.target
+        setFormValues({
+            ...formValues,
+            [name]: value,
         })
-        if (!foundUser){
-            alert("User not found!")
+    }
+    const userInfo = userDetails.find((user) =>{
+        return user.username === formValues.username && user.password === formValues.password
+    })
+
+    function handleSubmit(e){
+        e.preventDefault();
+        console.log(formValues)
+        if (!formValues.username === "" || formValues.password === ""){
+            alert("Cannot find user!")
             return
-        } 
-        alert(`Welcome back, ${formValue.username}`)
+        }
+         else if (!userInfo){
+            alert("Please enter credentials!")
+            return
+        }
+        alert(`Welcome back, ${formValues.username}`)
+            setFormValues({
+            username: "",
+            password: "",
+        })
     }
   return (
     <section className="loginInfo">
-        <h1>Welcome Back!</h1>
-        <p>Login to continue your shopping journey.</p>
+      <h1 className="welcomeHeading">Welcome back!</h1>
+      <p>login to continue your shopping journey.</p>
+      <form onSubmit={handleSubmit}>
+        <p>Enter username</p>
         <section>
-            <form onSubmit={handleSubmit}>
-                <section>
-                    <p>Enter username</p>
-                    <input required type="text" 
-                        name="username" 
-                        value={formValue.username} 
-                        onChange={handleChange}
-                        placeholder="Enter Username" />
-                </section>
-                    <p>Enter password</p>
-                <section className="passwordContainer">
-                    <input required type={ShowPswd ? "text" : "password"} 
-                        name="password" 
-                        value={formValue.password} 
-                        onChange={handleChange}
-                        placeholder="Enter Password" />
-                    <button type="button" onClick={() => setShowPswd(!ShowPswd)}>👁</button>   
-                </section>
-            <button type="submit" className="loginBtn">Login</button>
-            </form>
-            <section className="social">
-                <button className="continueWithSocials">Continue with Google</button>
-                <button className="continueWithSocials">Continue with Facebook</button>
-            </section>
+            <input type="text" 
+                name="username"
+                value={formValues.username}
+                onChange={handleChange}
+                placeholder="Enter username" />                
         </section>
+        <p>Enter password</p>
+        <section className="passwordContainer">
+            <input type={ShowPswd ? "text" : "password"} 
+                name="password"
+                value={formValues.password}
+                onChange={handleChange}
+                placeholder="Enter password" />                
+            <button type="button" onClick={()=> setShowPswd(!ShowPswd)}>👁</button>
+        </section>
+        <button type="submit" className="loginBtn">Login</button>
+      </form>
+      <section className="social">
+        <button className="continueWithSocials">Continue with Google</button>
+        <button className="continueWithSocials">Continue with Facebook</button>
+      </section>
     </section>
   )
 }
