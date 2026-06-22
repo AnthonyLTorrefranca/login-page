@@ -1,67 +1,67 @@
-import { useState } from 'react';
+import { useState } from "react"
 import './Login.css'
 
 export default function Login() {
-    const [showPswd, setShowPswd] = useState(false);
-    const [formValues, setFormValues] = useState({ 
-        username: "", 
-        password: "", 
-    });
-    
-    const users = [
-        {username: "tony", password: "test"},
-        {username: "simon", password: "test"},
-        {username: "john", password: "test"},
-        {username: "dave", password: "test"},
-        {username: "david", password: "test"},
-    ]
+    const [formValue, setFormValue] = useState({
+        username: "",
+        password: "",
+    }) 
+    const [ShowPswd, setShowPswd] = useState(false)
     function handleChange(e){
-
-    }
-    function handleSubmit(e){
-        e.preventDefault()
-        if (formValues.username !== users.username || formValues.password !== users.password ) {
-            alert("No user details found!")
-            return
-        }  
-        else {
-            alert(`Welcome back, ${formValues.username}`)
-        }
-        setFormValues({
-            username: "",
-            password: "",
+        const { name, value } = e.target;
+        setFormValue({
+            ...formValue,
+            [name]: value
         })
     }
-return (
-    <section className='loginInfo'>
-        <section>
-        </section>
+    const userDetail = [
+        { username: "tony", password: "test" },
+        { username: "simon", password: "test" },
+        { username: "john", password: "test" },
+        { username: "tian", password: "test" },
+        { username: "dave", password: "test" },
+    ]
+    function handleSubmit(e){
+        e.preventDefault()
+        const foundUser = userDetail.find((user) => {
+            return user.username === formValue.username.toLowerCase() && user.password === formValue.password;
+        })
+        if (!foundUser){
+            alert("User not found!")
+            return
+        } 
+        alert(`Welcome back, ${formValue.username}`)
+    }
+  return (
+    <section className="loginInfo">
+        <h1>Welcome Back!</h1>
         <p>Login to continue your shopping journey.</p>
-        <form onSubmit={handleSubmit}>
-            <p>Enter username</p>
+        <section>
+            <form onSubmit={handleSubmit}>
                 <section>
-                    <input type="text" required
-                    placeholder='Enter username'
-                    name="username"
-                    value={formValues.username}
-                    onChange={handleChange} />
+                    <p>Enter username</p>
+                    <input required type="text" 
+                        name="username" 
+                        value={formValue.username} 
+                        onChange={handleChange}
+                        placeholder="Enter Username" />
                 </section>
-            <p>Enter password</p>
-                <section className='passwordContainer'>
-                    <input type={showPswd ? "text" : "password" } required
-                    placeholder='Enter password' 
-                    value={formValues.password}
-                    onChange={(e) => setFormValues(prev =>({
-                        ...prev,
-                        password: e.target.value, 
-                    }))} />
-                    <button type='button' onClick={()=> setShowPswd(!showPswd)}>👁</button>
+                    <p>Enter password</p>
+                <section className="passwordContainer">
+                    <input required type={ShowPswd ? "text" : "password"} 
+                        name="password" 
+                        value={formValue.password} 
+                        onChange={handleChange}
+                        placeholder="Enter Password" />
+                    <button type="button" onClick={() => setShowPswd(!ShowPswd)}>👁</button>   
                 </section>
-            <button className='loginBtn'>Login</button>
-        </form>
-        <section className='social'>
-            <button className="continueWithSocials">Continue with Google</button>
-            <button className="continueWithSocials">Continue with Facebook</button>
+            <button onSubmit={handleSubmit} className="loginBtn">Login</button>
+            </form>
+            <section className="social">
+                <button className="continueWithSocials">Continue with Google</button>
+                <button className="continueWithSocials">Continue with Facebook</button>
+            </section>
         </section>
     </section>
-)}
+  )
+}
