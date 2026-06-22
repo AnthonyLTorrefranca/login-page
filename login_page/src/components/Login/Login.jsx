@@ -55,7 +55,7 @@ export default function Login() {
                         placeholder="Enter Password" />
                     <button type="button" onClick={() => setShowPswd(!ShowPswd)}>👁</button>   
                 </section>
-            <button onSubmit={handleSubmit} className="loginBtn">Login</button>
+            <button type="submit" className="loginBtn">Login</button>
             </form>
             <section className="social">
                 <button className="continueWithSocials">Continue with Google</button>
