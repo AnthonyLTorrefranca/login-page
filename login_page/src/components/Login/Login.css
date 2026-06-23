@@ -1,4 +1,4 @@
-.loginInfo {
+.loginInfoContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -8,22 +8,24 @@
     border: 10px solid lightgrey;
     border-radius: 10px;
 }
+.loginInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
 /* welcome heading */
 .welcomeHeading {
     margin: 0;
-    padding: 20px;
-    
+    padding: 20px;    
 }
 
-.loginInfo p{
-    font-size: 20px;
-}
 
 /* username container */
 
 .loginInfo input {
-    width: 95%;
+    width: 280px;
     font-size: 20px;
     border-radius: 10px;
     border: 1px solid grey;
@@ -34,7 +36,7 @@
 .passwordContainer{
     display: flex;
     flex-direction: row;
-    width: 110%;
+    width: 85%;
 }
 .passwordContainer button{
     margin: 0 10px;
@@ -49,7 +51,7 @@
 }
 
 .loginBtn {
-    width: 100%;
+    width: 85%;
     border: none;
     margin: 25px 0;
     padding: 15px;
@@ -67,13 +69,12 @@
 }
 
 .continueWithSocials {
-    width: 100%;
     border: none;
     margin: 5px 0;
     padding: 15px;
     color: black;
     font-size: 20px;
-    width: 300px;
+    width: 350px;
     cursor: pointer;
     border-radius: 25px;
     background-color: rgba(227, 227, 227, 0.712);
