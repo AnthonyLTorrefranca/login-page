@@ -1,24 +1,25 @@
-import { useState } from "react"
+import { useState} from 'react'
 import './Login.css'
 
 export default function Login() {
-    const [ShowPswd, setShowPswd] = useState(false) 
+    const [ShowPswd, setShowPswd] = useState(false)
     const [FormValues, setFormValues] = useState({
         username: "",
         password: "",
     })
-    const userDetails = [
-        { username: "simon", password: "test" },
-        { username: "tony", password: "test" },
-        { username: "tian", password: "test" },
-        { username: "john", password: "test" },
-    ]
-    const userFound = userDetails.find((user) => {
+    const [Appear, setAppear] = useState(false)
+    const userDetails = ([
+        {username: "simon", password:"test"},
+        {username: "tony", password:"test"},
+        {username: "tian", password:"test"},
+        {username: "john", password:"test"},
+    ])
+    const userCheck = userDetails.find((user) =>{
         return user.username === FormValues.username && user.password === FormValues.password;
     })
 
     function handleChange(e){
-        const {name, value} = e.target;
+        const { name, value } = e.target
         setFormValues(prev => ({
             ...prev,
             [name]: value,
@@ -29,49 +30,46 @@ export default function Login() {
         const username = FormValues.username === "";
         const password = FormValues.password === "";
         if (username || password){
-            alert("Please provide details!")
-            return
+            alert("Please enter credentials.") 
         }
-        else if (!userFound){
-            alert("User not found!")
-            return
+        else if(!userCheck){
+            setAppear(!false)
         }
-        alert(`Welcome back, ${FormValues.username}`)
+        // else if{
+
+        // }
+        // else if{
+
+        // }
     }
-    function showPass(){
+    function showPassword(){
         setShowPswd(!ShowPswd)
     }
-return (
-<>
+  return (
     <section className="loginInfoContainer">
-        <h1 className="welcomHeading">Welcome Back!</h1>
-        <p>login to continue with your shopping journey.</p>
         <form onSubmit={handleSubmit} className="loginInfo">
-            <p>Enter username</p>
+            <h1 className="welcomeHeading">Welcome Back!</h1>
+            <p>login to continue your shopping journey.</p>
+            { Appear && <h2>User not found!</h2>}
+            <p>Enter Username</p>
                 <section>
                     <input type="text"
-                        placeholder="Enter username" 
-                        name="username"
+                        name='username'
                         value={FormValues.username}
-                        onChange={handleChange} />
+                        onChange={handleChange}
+                        placeholder="Enter Username" />
                 </section>
-            <p>Enter username</p>
+            <p>Enter Password</p>
                 <section className="passwordContainer">
-                    <input type={ShowPswd ? "text" : "password"}
-                        placeholder="Enter password" 
-                        name="password"
+                    <input type={ShowPswd? "text" : "password"}
+                        name='password'
                         value={FormValues.password}
-                        onChange={handleChange} />
-                    <button type="button" onClick={showPass}>👁️</button>
+                        onChange={handleChange}
+                        placeholder="Enter Password" />
+                    <button onClick={showPassword}>👁️</button>
                 </section>
-                    <button className="loginBtn" type="submit">Login</button>
-
-            <seciton className="social">
-                <button className="continueWithSocials">Continue with Google</button>
-                <button className="continueWithSocials">Continue with Facebook</button>
-            </seciton>
-        </form>
+            <button type='submit' className='loginBtn'>Login</button>
+        </form> 
     </section>
-</>
   )
 }
