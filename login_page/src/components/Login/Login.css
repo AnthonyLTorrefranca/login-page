@@ -79,3 +79,8 @@
     border-radius: 25px;
     background-color: rgba(227, 227, 227, 0.712);
 }
+
+.errorKey{
+    color: red;
+    font-size: 30px;
+}

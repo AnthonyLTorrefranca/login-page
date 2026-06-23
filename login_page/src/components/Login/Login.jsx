@@ -81,9 +81,9 @@ export default function Login() {
         <form onSubmit={handleSubmit} className="loginInfo">
             <h1 className="welcomeHeading">Welcome Back!</h1>
             <p>login to continue your shopping journey.</p>
-            { Appear.ifUserFound && <h2>User not found!</h2>}
-            { Appear.emptyUsername && <h2>Please provide Username!</h2>}
-            { Appear.emptyPassword && <h2>Please provide Password!</h2>}
+            { Appear.ifUserFound && <h2 className='errorKey'>User not found!</h2>}
+            { Appear.emptyUsername && <h2 className='errorKey'>Please provide Username!</h2>}
+            { Appear.emptyPassword && <h2 className='errorKey'>Please provide Password!</h2>}
             <p>Enter Username</p>
                 <section>
                     <input type="text"
