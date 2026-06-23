@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import './Login.css'
+import App from '../../App';
 
 export default function Login() {
     const [ShowPswd, setShowPswd] = useState(false)
@@ -21,33 +22,31 @@ export default function Login() {
     const userCheck = userDetails.find((user) =>{
         return user.username === FormValues.username && user.password === FormValues.password;
     })
-    useEffect(()=> {
-        if (Appear){
-            const timer = setTimeout( () =>
-                setAppear({
-                    ifUserFound: false,
-                    emptyUsername: false,
+    useEffect(()=> { 
+        if(Appear){ 
+            const timer = setTimeout(()=>
+                setAppear({ 
+                    ifUserFound: false, 
+                    emptyUsername: false, 
                     emptyPassword: false,
                 }), 2000)
-                return () => clearTimeout(timer);
-
-    }}, [Appear]);
-
-    function handleChange(e){
-        const { name, value } = e.target
-        setFormValues(prev => ({
-            ...prev,
-            [name]: value,
-        }))
-    }
-    function handleSubmit(e){
-        e.preventDefault()
-        const username = FormValues.username === "";
-        const password = FormValues.password === "";
-        
-        if (username){
-            setAppear(
-                (prev) => ({ ...prev, 
+                return ()=> clearTimeout(timer);
+        }},[Appear])
+        function handleChange(e){
+            const { name, value } = e.target
+            setFormValues(prev => ({
+                ...prev,
+                [name]: value,
+            }))
+        }
+        function handleSubmit(e){
+            e.preventDefault()
+            const username = FormValues.username === "";
+            const password = FormValues.password === "";
+            
+            if (username){
+                setAppear(
+                    (prev) => ({ ...prev, 
                     emptyUsername: true}
                 ))
                 return
