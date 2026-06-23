@@ -7,7 +7,11 @@ export default function Login() {
         username: "",
         password: "",
     })
-    const [Appear, setAppear] = useState(false)
+    const [Appear, setAppear] = useState({
+        ifUserFound: false,
+        emptyUsername: false,
+        emptyPassword: false,
+    })
     const userDetails = ([
         {username: "simon", password:"test"},
         {username: "tony", password:"test"},
@@ -29,18 +33,34 @@ export default function Login() {
         e.preventDefault()
         const username = FormValues.username === "";
         const password = FormValues.password === "";
-        if (username || password){
-            alert("Please enter credentials.") 
+        
+        if (username){
+            setAppear(
+                (prev) => ({ ...prev, 
+                    emptyUsername: true}
+                ))
+                return
+            }
+        else if (password){
+            setAppear(
+                (prev) => ({ ...prev, 
+                emptyPassword: true}
+            ))
+            return
         }
         else if(!userCheck){
-            setAppear(!false)
+            setAppear(
+                (prev) => ({ ...prev,
+                    ifUserFound: true
+                })
+            )
+            return
         }
-        // else if{
 
-        // }
-        // else if{
-
-        // }
+        setFormValues({
+            username: "",
+            password: "",
+        })
     }
     function showPassword(){
         setShowPswd(!ShowPswd)
@@ -50,7 +70,9 @@ export default function Login() {
         <form onSubmit={handleSubmit} className="loginInfo">
             <h1 className="welcomeHeading">Welcome Back!</h1>
             <p>login to continue your shopping journey.</p>
-            { Appear && <h2>User not found!</h2>}
+            { Appear.ifUserFound && <h2>User not found!</h2>}
+            { Appear.emptyUsername && <h2>Please provide Username!</h2>}
+            { Appear.emptyPassword && <h2>Please provide Password!</h2>}
             <p>Enter Username</p>
                 <section>
                     <input type="text"
