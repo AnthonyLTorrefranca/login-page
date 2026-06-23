@@ -1,4 +1,4 @@
-import { useState} from 'react'
+import { useState, useEffect } from 'react'
 import './Login.css'
 
 export default function Login() {
@@ -21,6 +21,17 @@ export default function Login() {
     const userCheck = userDetails.find((user) =>{
         return user.username === FormValues.username && user.password === FormValues.password;
     })
+    useEffect(()=> {
+        if (Appear){
+            const timer = setTimeout( () =>
+                setAppear({
+                    ifUserFound: false,
+                    emptyUsername: false,
+                    emptyPassword: false,
+                }), 2000)
+                return () => clearTimeout(timer);
+
+    }}, [Appear]);
 
     function handleChange(e){
         const { name, value } = e.target
@@ -88,7 +99,7 @@ export default function Login() {
                         value={FormValues.password}
                         onChange={handleChange}
                         placeholder="Enter Password" />
-                    <button onClick={showPassword}>👁️</button>
+                    <button onClick={showPassword} type='button'>👁️</button>
                 </section>
             <button type='submit' className='loginBtn'>Login</button>
         </form> 
