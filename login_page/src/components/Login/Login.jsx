@@ -43,7 +43,7 @@ export default function Login() {
                 }))
             }, 2000);
     return () => clearTimeout(timer)
-}}, [FormStatus.userNotFound, FormStatus.userFound])
+}}, [FormStatus.userFound, FormStatus.userNotFound])
     
     function handleShow(){
         setFormStatus(prev =>({
@@ -78,7 +78,7 @@ export default function Login() {
   return (
     <>
     <section className='loginInfoContainer'>
-        <h1 className="welccomHeading">Welcome Back!</h1>
+        <h1 className="welcomeHeading">Welcome Back!</h1>
         <p>Login to continue your shopping journey.</p>
     <form onSubmit={handleSubmit} className='loginInfo'>
     {FormStatus.userNotFound && <h2 className='errorKey'>User not found!</h2>}
