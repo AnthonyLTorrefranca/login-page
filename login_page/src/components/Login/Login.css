@@ -80,7 +80,14 @@
     background-color: rgba(227, 227, 227, 0.712);
 }
 
+.correctKey {
+    color: greenyellow;
+}
+
 .errorKey{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: red;
     font-size: 30px;
 }
