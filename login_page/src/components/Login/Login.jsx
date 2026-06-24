@@ -19,38 +19,32 @@ export default function Login() {
         password: "",
     })
     const userCheck = userDetails.find(user =>{
-        return user.username === FormValues.username && user.password === FormValues.password;
+        const username = user.username === FormValues.username
+        const password = user.password === FormValues.password
+        return username && password
     })
 
-    useEffect(()=>{
+    useEffect(() => {
         let timer;
-        if (FormStatus.userNotFound){
+        if (FormStatus.userName || FormStatus.userFound || FormStatus.userNotFound){
             timer = setTimeout(() => {
-                setFormStatus(prev =>({
+                setFormStatus((prev) =>({
                     ...prev,
                     userFound: false,
                     userNotFound: false,
                 }))
             }, 2000);
         }
-        
-        else if (FormStatus.userFound){
-            timer = setTimeout(() => {
-                setFormStatus(prev =>({
-                    ...prev,
-                    userFound: false,
-                    userNotFound: false,
-                }))
-            }, 2000);
-    return () => clearTimeout(timer)
-}}, [FormStatus.userFound, FormStatus.userNotFound])
-    
+        return ()=> clearTimeout(timer)
+    }, [FormStatus.userName, FormStatus.userFound, FormStatus.userNotFound])
+
     function handleShow(){
         setFormStatus(prev =>({
             ...prev,
             showPswd: !prev.showPswd,
         }))
     }
+
     function handleChange(e){
         const {name, value} = e.target;
         setFormValues(prev => ({
@@ -58,20 +52,21 @@ export default function Login() {
             [name]: value,
         }))
     }
+
     function handleSubmit(e){
         e.preventDefault()
-        if (!userCheck){
-            setFormStatus(prev => ({
-                ...prev,
-                userFound: false,
-                userNotFound: true,
-            }))
-        }
-        else if (userCheck){
+        if(userCheck){
             setFormStatus( (prev) => ({
                 ...prev,
                 userFound: true,
                 userNotFound: false,
+            }))
+        }
+        else if (!userCheck){
+            setFormStatus(prev => ({
+                ...prev,
+                userFound: false,
+                userNotFound: true,
             }))
         }
     }
@@ -82,6 +77,7 @@ export default function Login() {
         <p>Login to continue your shopping journey.</p>
     <form onSubmit={handleSubmit} className='loginInfo'>
     {FormStatus.userNotFound && <h2 className='errorKey'>User not found!</h2>}
+    {FormStatus.userName && <h2 className='errorKey'>Username not found!</h2>}
     {FormStatus.userFound && <h2 className='correctKey'>Welcome Back, {FormValues.username}!</h2>}
         <p>Enter Username</p>
         <section>
