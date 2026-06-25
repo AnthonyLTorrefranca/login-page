@@ -9,6 +9,9 @@ export default function Login() {
         {username: "david", password: "test"},
         {username: "tian", password: "test"},
     ])
+    const userCheck = userDetails.find((user)=>{
+        return () => user.username === FormValues.username && user.password === FormValues.password;
+    })
     const [FormStatus, setFormStatus] = useState({
         userFound: false,
         userNotFound: false,
@@ -18,15 +21,10 @@ export default function Login() {
         username: "",
         password: "",
     })
-    const userCheck = userDetails.find(user =>{
-        const username = user.username === FormValues.username
-        const password = user.password === FormValues.password
-        return username && password
-    })
 
     useEffect(() => {
         let timer;
-        if (FormStatus.userName || FormStatus.userFound || FormStatus.userNotFound){
+        if (userCheck){
             timer = setTimeout(() => {
                 setFormStatus((prev) =>({
                     ...prev,
@@ -76,9 +74,9 @@ export default function Login() {
         <h1 className="welcomeHeading">Welcome Back!</h1>
         <p>Login to continue your shopping journey.</p>
     <form onSubmit={handleSubmit} className='loginInfo'>
-    {FormStatus.userNotFound && <h2 className='errorKey'>User not found!</h2>}
-    {FormStatus.userName && <h2 className='errorKey'>Username not found!</h2>}
-    {FormStatus.userFound && <h2 className='correctKey'>Welcome Back, {FormValues.username}!</h2>}
+        {FormStatus.userNotFound && <h2 className='errorKey'>User not found!</h2>}
+        {FormStatus.userName && <h2 className='errorKey'>Username not found!</h2>}
+        {FormStatus.userFound && <h2 className='correctKey'>Welcome Back, {FormValues.username}!</h2>}
         <p>Enter Username</p>
         <section>
             <input type="text"
