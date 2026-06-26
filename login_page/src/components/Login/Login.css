@@ -21,9 +21,7 @@
     padding: 20px;    
 }
 
-
 /* username container */
-
 .loginInfo input {
     width: 280px;
     font-size: 20px;
@@ -38,6 +36,7 @@
     flex-direction: row;
     width: 85%;
 }
+
 .passwordContainer button{
     margin: 0 10px;
 }
@@ -89,5 +88,4 @@
     align-items: center;
     justify-content: center;
     color: red;
-    font-size: 30px;
 }
