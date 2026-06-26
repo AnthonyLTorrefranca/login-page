@@ -83,7 +83,7 @@
     color: greenyellow;
 }
 
-.errorKey{
+.incorrectKey{
     display: flex;
     align-items: center;
     justify-content: center;
