@@ -1,14 +1,14 @@
-.login_info {
+/* .login_info {
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
     width: 400px;
     /* border */
-    border-radius: 20px;
-    border: 5px solid rgb(181, 181, 181);
-  }
-input {    
+    /* border-radius: 20px;
+    border: 5px solid rgb(181, 181, 181); 
+  */
+  input {    
     display: flex;
     justify-content: center;
     flex-direction: column;
