@@ -15,20 +15,22 @@ export default function Login() {
     const [UserStatus, setUserStatus] = useState({
         userFound: false,
         userNotFound: false,
+        inputFEmpty: false,
         idle: true
     })
-    const isFormEmpty = !FormValues.username.trim() || !FormValues.password.trim();
-    const [showPswd,setShowPswd] = useState(false)
+    const IsFormEmpty = !FormValues.username.trim() && !FormValues.password.trim();
+    const [ShowPswd,setShowPswd] = useState(false)
     
     useEffect(() => {
         let timer;
-        if (isFormEmpty){
+        if (IsFormEmpty){
                 timer = setTimeout(() => {
                 setUserStatus(prev => ({
                     ...prev,
-                    idle: true,
                     userFound: false,
-                    userNotFound: false
+                    userNotFound: false,
+                    inputFEmpty: false,
+                    idle: true,
                 }))
             }, 2000);
         }
@@ -50,22 +52,34 @@ export default function Login() {
                 }))
             }, 2000);
         } return ()=> clearTimeout(timer)
-    }, [isFormEmpty, UserStatus.userFound, UserStatus.userNotFound])
+    }, [IsFormEmpty, UserStatus.userFound, UserStatus.userNotFound])
 
-    function handleShow(){
-        setShowPswd(!showPswd)
+    function HandleShow(){
+        setShowPswd(!ShowPswd)
     }
-    function handleChange(e){
+    function HandleChange(e){
         const {name,value} = e.target
         setFormValues(prev =>({
             ...prev,
             [name]: value
         }))
     }
-    function handleSubmit(e){
+    function HandleSubmit(e){
         e.preventDefault()
         const formvaluesUsername = FormValues.username
         const formvaluesPassword = FormValues.password
+        
+        if (IsFormEmpty){
+            console.log("formEmpty")
+            setUserStatus(prev => ({
+                ...prev,
+                userFound: false,
+                userNotFound: false,
+                inputFEmpty: true,
+                idle: false
+            }))
+            return
+        }
         
         const userCheck = userDetails.find(user => {
             return user.username === formvaluesUsername && user.password === formvaluesPassword
@@ -77,8 +91,10 @@ export default function Login() {
                 ...prev,
                 userFound: true,
                 userNotFound: false,
+                inputFEmpty: false,
                 idle: false
             }))
+            return
         }
         else if (!userCheck){
             console.log("!userCheck")
@@ -86,43 +102,40 @@ export default function Login() {
                 ...prev,
                 userFound: false,
                 userNotFound: true,
+                inputFEmpty: false,
                 idle: false
             }))
-        }
-        else if (isFormEmpty){
-            setUserStatus(prev => ({
-                ...prev,
-                idle: true
-            }))
+            return
         }
     }
     return (
         <section className='loginInfoContainer'>
         <section className='loginInfo'>
-            {/* <h1 className="welcomeHeader">Welcome back!</h1> */}
             {UserStatus.userFound && <h2 className='correctKey'>Welcome Back, {FormValues.username}!</h2>}
             {UserStatus.userNotFound && <h2 className='incorrectKey'>Error! No user found.</h2>}
+            {UserStatus.inputFEmpty && <h2>Please enter your credentials first.</h2>}
             {UserStatus.idle && <h2>Login to continue your shopping journey!</h2>}
-            <p>login to continue your shopping journey.</p>
-            <form onSubmit={handleSubmit}>
-                <p>Enter Username</p>
+            <form onSubmit={HandleSubmit}>
+                <label className='InputLabel' htmlFor='username'>Enter Username</label>
                 <section>
                     <input type="text"
+                        id='username'
                         name="username"
                         value={FormValues.username}
-                        onChange={handleChange}
+                        onChange={HandleChange}
                         placeholder='Enter Username'
                      />
                 </section>
-                <p>Enter Password</p>
+                <label className='InputLabel' htmlFor='password'>Enter Password</label>
                 <section className='passwordContainer'>
-                    <input type={showPswd ? "text" : "password"}
+                    <input type={ShowPswd ? "text" : "password"}
+                        id='password'
                         name="password"
                         value={FormValues.password}
-                        onChange={handleChange}
+                        onChange={HandleChange}
                         placeholder='Enter Password'
                      />
-                    <button type='button' onClick={handleShow}>👁️</button>
+                    <button type='button' onClick={HandleShow}>👁️</button>
                 </section>
                     <button className='loginBtn' type='submit'>Login</button>
             </form>
