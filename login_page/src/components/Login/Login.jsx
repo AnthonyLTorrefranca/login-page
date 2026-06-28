@@ -15,61 +15,84 @@ export default function Login() {
     const [UserStatus, setUserStatus] = useState({
         userFound: false,
         userNotFound: false,
+        idle: true
     })
+    const isFormEmpty = !FormValues.username.trim() || !FormValues.password.trim();
     const [showPswd,setShowPswd] = useState(false)
     
     useEffect(() => {
         let timer;
-        if (UserStatus.userFound){
-            timer = setTimeout(() => {
+        if (isFormEmpty){
+                timer = setTimeout(() => {
                 setUserStatus(prev => ({
                     ...prev,
-                    userFound: false
-                }))
-            }, 2000);
-        }
-        else if (UserStatus.userNotFound){
-            timer = setTimeout(() => {
-                setUserStatus(prev => ({
-                    ...prev,
+                    idle: true,
+                    userFound: false,
                     userNotFound: false
                 }))
             }, 2000);
         }
-        return ()=> clearTimeout(timer)
-    }, [UserStatus.userFound, UserStatus.userNotFound])
+        else if (UserStatus.userFound){
+                timer = setTimeout(() => {
+                setUserStatus((prev)=>({
+                    ...prev,
+                    idle: true,
+                    userFound: false,
+                }))
+            }, 2000);
+        }
+        else if (UserStatus.userNotFound){
+                timer = setTimeout(() => {
+                setUserStatus((prev)=>({
+                    ...prev,
+                    idle: true,
+                    userNotFound: false,
+                }))
+            }, 2000);
+        } return ()=> clearTimeout(timer)
+    }, [isFormEmpty, UserStatus.userFound, UserStatus.userNotFound])
 
     function handleShow(){
         setShowPswd(!showPswd)
     }
     function handleChange(e){
-        const { name, value } = e.target
-        setFormValues(prev => ({
+        const {name,value} = e.target
+        setFormValues(prev =>({
             ...prev,
             [name]: value
         }))
     }
     function handleSubmit(e){
         e.preventDefault()
-        console.log(FormValues)
+        const formvaluesUsername = FormValues.username
+        const formvaluesPassword = FormValues.password
+        
         const userCheck = userDetails.find(user => {
-            return user.username === FormValues.username && user.password === FormValues.password;
+            return user.username === formvaluesUsername && user.password === formvaluesPassword
         })
-
+        
         if (userCheck){
-            console.log("userFound")
+            console.log("userCheck")
             setUserStatus(prev => ({
                 ...prev,
                 userFound: true,
-                userNotFound: false
+                userNotFound: false,
+                idle: false
             }))
         }
         else if (!userCheck){
-            console.log("userNotFound")
+            console.log("!userCheck")
             setUserStatus(prev => ({
                 ...prev,
                 userFound: false,
-                userNotFound: true
+                userNotFound: true,
+                idle: false
+            }))
+        }
+        else if (isFormEmpty){
+            setUserStatus(prev => ({
+                ...prev,
+                idle: true
             }))
         }
     }
@@ -79,8 +102,9 @@ export default function Login() {
             {/* <h1 className="welcomeHeader">Welcome back!</h1> */}
             {UserStatus.userFound && <h2 className='correctKey'>Welcome Back, {FormValues.username}!</h2>}
             {UserStatus.userNotFound && <h2 className='incorrectKey'>Error! No user found.</h2>}
+            {UserStatus.idle && <h2>Login to continue your shopping journey!</h2>}
             <p>login to continue your shopping journey.</p>
-            <form onClick={handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <p>Enter Username</p>
                 <section>
                     <input type="text"
