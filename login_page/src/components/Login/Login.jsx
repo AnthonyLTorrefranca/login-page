@@ -126,6 +126,10 @@ export default function Login() {
                 </section>
                     <button className='loginBtn' type='submit'>Login</button>
             </form>
+                <section className="socials">
+                    <button className="continueWithSocials">Continue with Google.</button>
+                    <button className="continueWithSocials">Continue with Facebook.</button>
+                </section>
         </section>
     </section>
 )}
