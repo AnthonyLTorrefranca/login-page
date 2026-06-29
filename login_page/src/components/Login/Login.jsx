@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react'
+import {useState} from 'react'
 import './Login.css'
 
 const Login = () => {
@@ -13,57 +13,27 @@ const Login = () => {
         username: "",
         password: ""
     })
-    const [UserStatus, setUserStatus] = useState({
-        userFound: false,
-        userNotFound: false,
-        idle: true
-    })
+    const [status, setStatus] = useState('idle')
 
     const userCheck = userDetails.find(user => {
         return FormValues.username === user.username && FormValues.password === user.password
     })
-    useEffect(()=> {
-        let timer;
-        if (userCheck){
-            timer = setTimeout(() => {
-                setUserStatus(prev=> ({
-                    ...prev,
-                    userFound: false,
-                    idle: true
-                }))
-            }, 2000);
-        }   
-        else{
-            timer = setTimeout(() => {
-                setUserStatus(prev => ({
-                    ...prev,
-                    userNotFound: false,
-                    idle: true
-                }))
-            }, 2000);
-        }
-        return ()=> clearTimeout(timer)
-    }, [userCheck])
     
     function HandleSubmit(e){
         e.preventDefault()
         
         if (userCheck){
             console.log("true")
-            setUserStatus(prev=>({
-                ...prev,
-                userFound: true,
-                userNotFound: false,
-                idle: false
-            }))
+            setStatus('userFound')
+            setTimeout(() => {
+                setStatus('idle')
+            }, 4000);
         }
         else{
-            setUserStatus(prev=>({
-                ...prev,
-                userFound: false,
-                userNotFound: true,
-                idle: false                
-            }))
+            setStatus('userNotFound')
+            setTimeout(() => {
+                setStatus('idle')
+            }, 4000);
         }
     }
     function HandleChange(e){
@@ -73,15 +43,12 @@ const Login = () => {
             [name]: value
         }))
     }
-    const idle = UserStatus.idle
-    const userFound = UserStatus.userFound
-    const userNotFound = UserStatus.userNotFound
 return (
     <section className='loginInfoContainer'>
         <section className="loginInfo">
-            {idle && <h1>Welcome back!</h1>}
-            {userFound && <h1 className='correctKey'>Welcome back, {FormValues.username}!</h1>}
-            {userNotFound && <h1 className='incorrectKey'>User not Found!</h1>}
+            {status === 'idle' && <h1>Welcome back!</h1>}
+            {status === 'userFound'&& <h1 className='correctKey'>Welcome back, {FormValues.username}!</h1>}
+            {status === 'userNotFound'&& <h1 className='incorrectKey'>User not Found!</h1>}
             <p>login to continue your shopping journey.</p>
             <form onSubmit={HandleSubmit}>
                 <label htmlFor='username' className='InputLabel'>Enter username</label>
